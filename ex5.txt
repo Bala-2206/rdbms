@@ -1,0 +1,39 @@
+CREATE DATABASE IF NOT EXISTS bank_db;
+USE bank_db;
+
+DROP TABLE IF EXISTS bank;
+CREATE TABLE bank (
+    accountID INT PRIMARY KEY AUTO_INCREMENT,
+    accountName VARCHAR(50),
+    balance DECIMAL(10,2)
+);
+
+INSERT INTO bank (accountName, balance) VALUES
+('Ravi', 500),
+('Priya', 1500),
+('Anil', 2000),
+('Meena', 1000),
+('Kumar', 300);
+
+SELECT * FROM bank;
+
+DELIMITER //
+
+CREATE PROCEDURE transfer(IN from_acc INT, IN to_acc INT, IN amt DECIMAL(10,2))
+BEGIN
+  DECLARE sender_balance DECIMAL(10,2);
+  SELECT balance INTO sender_balance FROM bank WHERE accountID = from_acc;
+
+  IF sender_balance IS NULL OR sender_balance < amt THEN
+    SELECT 'Insufficient Funds' AS transaction_status;
+  ELSE
+    UPDATE bank SET balance = balance - amt WHERE accountID = from_acc;
+    UPDATE bank SET balance = balance + amt WHERE accountID = to_acc;
+    SELECT 'Transaction Successful' AS transaction_status;
+  END IF;
+END //
+
+DELIMITER ;
+
+CALL transfer(1,2,200);
+SELECT * FROM bank;
