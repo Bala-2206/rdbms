@@ -9,11 +9,11 @@ CREATE TABLE bank (
 );
 
 INSERT INTO bank (accountName, balance) VALUES
-('Ravi', 500),
-('Priya', 1500),
-('Anil', 2000),
-('Meena', 1000),
-('Kumar', 300);
+('bala', 500),
+('sai', 1500),
+('kishore', 2000),
+('vasi', 1000),
+('sanjay', 300);
 
 SELECT * FROM bank;
 
@@ -37,3 +37,4 @@ DELIMITER ;
 
 CALL transfer(1,2,200);
 SELECT * FROM bank;
+
